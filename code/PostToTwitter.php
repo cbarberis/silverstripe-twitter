@@ -13,35 +13,35 @@ class PostToTwitter extends Controller {
 	
 	private static $twitter_access_token_secret;
 	
-	public function set_twitter_consumer_key($key) {
+	public static function set_twitter_consumer_key($key) {
 		self::$twitter_consumer_key = $key;
 	}
 	
-	protected function get_twitter_consumer_key() {
+	protected static function get_twitter_consumer_key() {
 		return self::$twitter_consumer_key;
 	}
 	
-	public function set_twitter_consumer_secret($key) {
+	public static function set_twitter_consumer_secret($key) {
 		self::$twitter_consumer_secret = $key;
 	}
 	
-	protected function get_twitter_consumer_secret() {
+	protected static function get_twitter_consumer_secret() {
 		return self::$twitter_consumer_secret;
 	}
 	
-	public function set_twitter_access_token($key) {
+	public static function set_twitter_access_token($key) {
 		self::$twitter_access_token = $key;
 	}
 	
-	protected function get_twitter_access_token() {
+	protected static function get_twitter_access_token() {
 		return self::$twitter_access_token;
 	}
 	
-	public function set_twitter_access_token_secret($key) {
+	public static function set_twitter_access_token_secret($key) {
 		self::$twitter_access_token_secret = $key;
 	}
 	
-	protected function get_twitter_access_token_secret() {
+	protected static function get_twitter_access_token_secret() {
 		return self::$twitter_access_token_secret;
 	}
 	
