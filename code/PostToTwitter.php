@@ -45,9 +45,15 @@ class PostToTwitter extends Controller {
 		return self::$twitter_access_token_secret;
 	}
 	
+	static function ready_to_tweet() {
+		return (self::$twitter_consumer_key && self::$twitter_consumer_secret && self::$twitter_access_token && self::$twitter_access_token_secret);
+	}	
 	
 	function postToTwitter($message = null){
-
+		if(!self::ready_to_tweet() && $message) {
+			return false;
+	
+		}
 		// create instance
 		$twitter = new Twitter(self::$twitter_consumer_key, self::$twitter_consumer_secret);
 
