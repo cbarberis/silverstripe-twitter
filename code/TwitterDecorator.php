@@ -12,7 +12,7 @@ class TwitterDecorator extends DataObjectDecorator {
 	}
 	
 	function updateCMSFields(&$fields) {
-		
+
 		if(!PostToTwitter::ready_to_tweet()) {
 			$fields->addFieldToTab('Root.Content.Twitter', new LiteralField('NotGoodToTweet', '<p>ATTENTION: You need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>', 4));
 			$fields->addFieldToTab('Root.Content.Twitter', new ReadonlyField('LastTweet','Last Tweet'));
@@ -53,6 +53,7 @@ class TwitterDecorator extends DataObjectDecorator {
 	function onBeforeWrite(){
 		if($this->getTwitterField() && $this->PostToTwitter) {
 			$this->owner->LastPostedToTwitter = date('d/m/Y g:ia');
+			$this->owner->LastTweet = $this->getTwitterField();
 		}
 	}
 	
