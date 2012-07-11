@@ -14,11 +14,11 @@ class TwitterDecorator extends DataObjectDecorator {
 	function updateCMSFields(&$fields) {
 
 		if(!PostToTwitter::ready_to_tweet()) {
-			$fields->addFieldToTab('Root.Content.Twitter', new LiteralField('NotGoodToTweet', '<p>ATTENTION: You need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>', 4));
-			$fields->addFieldToTab('Root.Content.Twitter', new ReadonlyField('LastTweet','Last Tweet'));
+			$fields->addFieldToTab('Root.Content.Twitter', new LiteralField('NotGoodToTweet', '<p>ATTENTION: This will NOT make it to Twitter, you need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>', 4));
 		}
 		$fields->addFieldToTab('Root.Content.Twitter', new CheckboxField('PostToTwitter', 'Post to Twitter'));
 		$fields->addFieldToTab('Root.Content.Twitter', new ReadonlyField('LastPostedToTwitter', 'Last Posted To Twitter'));
+		$fields->addFieldToTab('Root.Content.Twitter', new ReadonlyField('LastTweet','Last Tweet Content'));
 		
 	}
 	
