@@ -12,13 +12,13 @@ class TwitterDecorator extends DataObjectDecorator {
 	}
 	
 	function updateCMSFields(&$fields) {
-
-		if(!PostToTwitter::ready_to_tweet()) {
-			$fields->addFieldToTab('Root.Content.Twitter', new LiteralField('NotGoodToTweet', '<p>ATTENTION: This will NOT make it to Twitter, you need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>', 4));
-		}
-		$fields->addFieldToTab('Root.Content.Twitter', new CheckboxField('PostToTwitter', 'Post to Twitter'));
-		$fields->addFieldToTab('Root.Content.Twitter', new ReadonlyField('LastPostedToTwitter', 'Last Posted To Twitter'));
-		$fields->addFieldToTab('Root.Content.Twitter', new ReadonlyField('LastTweet','Last Tweet Content'));
+		$tabName = ($this->owner instanceof SiteTree) ? 'Root.Content.SocialMedia' : 'Root.SocialMedia';
+		$fields->addFieldToTab($tabName, new HeaderField('TwitterHeader', 'Twitter', 4));
+		if(!PostToTwitter::ready_to_tweet())
+			$fields->addFieldToTab($tabName, new LiteralField('NotGoodToTweet', '<p>ATTENTION: This will NOT make it to Twitter, you need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>'));
+		$fields->addFieldToTab($tabName, new CheckboxField('PostToTwitter', 'Post to Twitter'));
+		$fields->addFieldToTab($tabName, new ReadonlyField('LastPostedToTwitter', 'Last Posted To Twitter'));
+		$fields->addFieldToTab($tabName, new ReadonlyField('LastTweet','Last Tweet Content'));
 		
 	}
 	
