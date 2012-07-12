@@ -51,6 +51,7 @@ class TwitterDecorator extends DataObjectDecorator {
 	
 	
 	function onBeforeWrite(){
+		parent::onBeforeWrite();
 		if($this->getTwitterField() && $this->PostToTwitter) {
 			$this->owner->LastPostedToTwitter = date('d/m/Y g:ia');
 			$this->owner->LastTweet = $this->getTwitterField();
@@ -58,6 +59,7 @@ class TwitterDecorator extends DataObjectDecorator {
 	}
 	
 	function onAfterWrite(){
+		parent::onAfterWrite();
 		if($this->getTwitterField() && $this->PostToTwitter) {
 			$message = $this->getTwitterField();
 			$twitter = new PostToTwitter();
