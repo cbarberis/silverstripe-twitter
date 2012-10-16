@@ -7,7 +7,7 @@
 	
 ## Requirements
 
-* Silverstripe 2.4 or newer (Sapphire and CMS)
+* Silverstripe 3.0 or newer (Framework and CMS)
 
 ## Module Status
 
@@ -26,17 +26,17 @@ There are a few ways to use the decorator. Add this in your mysite/_config.php
 
 * 1. Post content from one field in your DataObject:
 
-DataObject::add_extension('MyDO','TwitterDecorator'); 
+DataObject::add_extension('MyDO','TwitterExtension'); 
 TwitterDecorator::set_twitter_fields(array('MyDO' => 'Title'));
 
 * 2. Post content from multiple fields in Pages: 
 
-DataObject::add_extension('Page','TwitterDecorator'); 
+DataObject::add_extension('Page','TwitterExtension'); 
 TwitterDecorator::set_twitter_fields(array('Page' => array('Title','OtherField')));
 
 * 3. You can create a method in your class to generate content to post (this will post what MyFunction returns, make sure this is an string!).
 
-DataObject::add_extension('MyClass','TwitterDecorator'); 
+DataObject::add_extension('MyClass','TwitterExtension'); 
 TwitterDecorator::set_twitter_fields(array('MyClass' => array('MyFunction')));
 
 # Installation

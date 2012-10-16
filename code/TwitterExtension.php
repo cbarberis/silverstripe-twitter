@@ -1,19 +1,22 @@
 <?php
 
-class TwitterDecorator extends DataObjectDecorator {
+class TwitterExtension extends DataExtension {
 	
-	function extraStatics() {
-		return array(
-			"db" => array(
-				"LastPostedToTwitter" => "Varchar(255)",
-				"LastTweet" => "Varchar(255)"
-			)
-		);
-	}
+
+	static $db = array(
+		"LastPostedToTwitter" => "Varchar(255)",
+		"LastTweet" => "Varchar(255)"
+	);
+
+
 	
-	function updateCMSFields(&$fields) {
+	function updateCMSFields(FieldList $fields) {
 		$tabName = ($this->owner instanceof SiteTree) ? 'Root.Content.SocialMedia' : 'Root.SocialMedia';
 		$fields->addFieldToTab($tabName, new HeaderField('TwitterHeader', 'Twitter', 4));
+		if(TwitterAccount::twitter_accounts_set()) {
+			$twitterAccounts = DataObject::get('TwitterAccount','', '"AccountName" ASC');
+			$fields->addFieldToTab($tabName, new DropdownField('twitterAccount', 'Twitter Account', $twitterAccounts->map('ID', 'AccountName')));	
+		}
 		if(!PostToTwitter::ready_to_tweet())
 			$fields->addFieldToTab($tabName, new LiteralField('NotGoodToTweet', '<p>ATTENTION: This will NOT make it to Twitter, you need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>'));
 		$fields->addFieldToTab($tabName, new CheckboxField('PostToTwitter', 'Post to Twitter'));
@@ -45,7 +48,7 @@ class TwitterDecorator extends DataObjectDecorator {
 		}
 	}
 	
-	function set_twitter_fields($fields = array()) {
+	static function set_twitter_fields($fields = array()) {
 		self::$twitterField = $fields;
 	}
 	
