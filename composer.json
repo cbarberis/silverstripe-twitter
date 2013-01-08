@@ -1,0 +1,17 @@
+{
+	"name": "silverstripe/silverstripe-twitter",
+	"type": "silverstripe-module",
+	"description": "The SilverStripe CMS Twitter Module",
+	"homepage": "http://silverstripe.org",
+	"license": "BSD-3-Clause",
+	"keywords": ["silverstripe", "twitter"],
+	"authors": [
+		{
+			"name": "Carlos Barberis",
+			"homepage": "https://github.com/cbarberis/silverstripe-twitter"
+		}
+	],
+	"require": {
+		"silverstripe/cms": "3.0.*"
+	}
+}
