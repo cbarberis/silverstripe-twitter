@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/silverstripe-twitter",
+	"name": "silverstripe/twitter",
 	"type": "silverstripe-module",
 	"description": "The SilverStripe CMS Twitter Module",
 	"homepage": "http://silverstripe.org",
