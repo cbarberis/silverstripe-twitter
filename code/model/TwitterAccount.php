@@ -13,4 +13,8 @@ class TwitterAccount extends DataObject {
 	static function twitter_accounts_set() {
 		return DataObject::get('TwitterAccount')->Count();
 	}
+
+	static $summary_fields = array(
+		'AccountName'
+	);
 }

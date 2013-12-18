@@ -44,24 +44,24 @@ class PostToTwitter extends Controller {
 	protected static function get_twitter_access_token_secret() {
 		return self::$twitter_access_token_secret;
 	}
+
+	public function __construct($twitterAccount = null) {
+		if($twitterAccount) {
+			self::set_twitter_consumer_key($twitterAccount->ConsumerKey);
+			self::set_twitter_consumer_secret($twitterAccount->ConsumerSecret);
+			self::set_twitter_access_token($twitterAccount->AccessToken);
+			self::set_twitter_access_token_secret($twitterAccount->TokenSecret);
+		}
+    }
 	
 	static function ready_to_tweet() {
 		return ((self::$twitter_consumer_key && self::$twitter_consumer_secret && self::$twitter_access_token && self::$twitter_access_token_secret) || (TwitterAccount::twitter_accounts_set()));
 	}	
 	
-	function postToTwitter($message = null, $twitterAccount = null){
-
-		// we are using TwitterAccount model, user can choose a Twitter account created in a model admin
-		if($twitterAccount) {
-			self::set_twitter_consumer_key($twitterAccount->ConsumerSecret);
-			self::set_twitter_consumer_secret($twitterAccount->AccessToken);
-			self::set_twitter_access_token($twitterAccount->ConsumerKey);
-			self::set_twitter_access_token_secret($twitterAccount->TokenSecret);
-		}
+	function postStatus($message = null){
 
 		if(!self::ready_to_tweet() && $message) {
 			return false;
-	
 		}
 
 		// create instance

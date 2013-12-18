@@ -8,17 +8,23 @@ class TwitterExtension extends DataExtension {
 		"LastTweet" => "Varchar(255)"
 	);
 
+	static $has_one = array(
+		'Account' => 'TwitterAccount'
+	);
+
 
 	
 	function updateCMSFields(FieldList $fields) {
-		$tabName = ($this->owner instanceof SiteTree) ? 'Root.Content.SocialMedia' : 'Root.SocialMedia';
+		$tabName = 'Root.SocialMedia';
 		$fields->addFieldToTab($tabName, new HeaderField('TwitterHeader', 'Twitter', 4));
-		if(TwitterAccount::twitter_accounts_set()) {
-			$twitterAccounts = DataObject::get('TwitterAccount','', '"AccountName" ASC');
-			$fields->addFieldToTab($tabName, new DropdownField('twitterAccount', 'Twitter Account', $twitterAccounts->map('ID', 'AccountName')));	
-		}
+		// if(TwitterAccount::twitter_accounts_set()) {
+		// 	$twitterAccounts = DataObject::get('TwitterAccount','', '"AccountName" ASC');
+		// 	$fields->addFieldToTab($tabName, new DropdownField('twitterAccount', 'Twitter Account', $twitterAccounts->map('ID', 'AccountName')));	
+		// }
 		if(!PostToTwitter::ready_to_tweet())
 			$fields->addFieldToTab($tabName, new LiteralField('NotGoodToTweet', '<p>ATTENTION: This will NOT make it to Twitter, you need to set your public and private keys, please see module documentation or <a href="http://dev.twitter.com/pages/auth" target="_blank">http://dev.twitter.com/pages/auth</a></p>'));
+		$fields->addFieldToTab($tabName, DropdownField::create('AccountID', 'Twitter Account', TwitterAccount::get()->map('ID', 'AccountName'))->setEmptyString(' '));
+		//'GalleryID', 'Gallery', Gallery::get()->map('ID', 'Title')
 		$fields->addFieldToTab($tabName, new CheckboxField('PostToTwitter', 'Post to Twitter'));
 		$fields->addFieldToTab($tabName, new ReadonlyField('LastPostedToTwitter', 'Last Posted To Twitter'));
 		$fields->addFieldToTab($tabName, new ReadonlyField('LastTweet','Last Tweet Content'));
@@ -55,6 +61,7 @@ class TwitterExtension extends DataExtension {
 	
 	function onBeforeWrite(){
 		parent::onBeforeWrite();
+		
 		if($this->getTwitterField() && $this->PostToTwitter) {
 			$this->owner->LastPostedToTwitter = date('d/m/Y g:ia');
 			$this->owner->LastTweet = $this->getTwitterField();
@@ -63,10 +70,10 @@ class TwitterExtension extends DataExtension {
 	
 	function onAfterWrite(){
 		parent::onAfterWrite();
-		if($this->getTwitterField() && $this->PostToTwitter) {
+		if($this->getTwitterField() && $this->PostToTwitter && $this->owner->AccountID) {
 			$message = $this->getTwitterField();
-			$twitter = new PostToTwitter();
-			$resp = $twitter->postToTwitter($message);
+			$twitter = new PostToTwitter($this->owner->Account());
+			$resp = $twitter->postStatus($message);
 		}
 	}
 }
