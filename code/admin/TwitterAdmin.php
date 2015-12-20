@@ -1,12 +1,13 @@
 <?php
 
-class TwitterAdmin extends ModelAdmin {
+class TwitterAdmin extends ModelAdmin
+{
 
-	static $url_segment = 'social-media';
+    public static $url_segment = 'social-media';
 
-	static $menu_title = 'Social Media';
+    public static $menu_title = 'Social Media';
 
-	static $managed_models = array(
-		'TwitterAccount'
-	);
+    public static $managed_models = array(
+        'TwitterAccount'
+    );
 }

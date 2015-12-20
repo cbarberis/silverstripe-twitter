@@ -1,20 +1,22 @@
 <?php
 
-class TwitterAccount extends DataObject {
+class TwitterAccount extends DataObject
+{
 
-	static $db = array(
-		'AccountName' => 'Varchar(255)',
-		'ConsumerSecret' => 'Varchar(255)',
-		'AccessToken' => 'Varchar(255)',
-		'ConsumerKey' => 'Varchar(255)',
-		'TokenSecret' => 'Varchar(255)'
-	);
+    public static $db = array(
+        'AccountName' => 'Varchar(255)',
+        'ConsumerSecret' => 'Varchar(255)',
+        'AccessToken' => 'Varchar(255)',
+        'ConsumerKey' => 'Varchar(255)',
+        'TokenSecret' => 'Varchar(255)'
+    );
 
-	static function twitter_accounts_set() {
-		return DataObject::get('TwitterAccount')->Count();
-	}
+    public static function twitter_accounts_set()
+    {
+        return DataObject::get('TwitterAccount')->Count();
+    }
 
-	static $summary_fields = array(
-		'AccountName'
-	);
+    public static $summary_fields = array(
+        'AccountName'
+    );
 }
